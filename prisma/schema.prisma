@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+  USER
+}
+
+enum Category {
+  THERAPY
+  SURGERY
+  CARDIOLOGY
+  NEUROLOGY
+  PEDIATRICS
+  GYNECOLOGY
+  ANESTHESIOLOGY
+  PHARMACOLOGY
+  OTHER
+}
+
+enum FileType {
+  PDF
+  DOCX
+  PPTX
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  role      Role     @default(USER)
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  favorites    Favorite[]
+  comments     Comment[]
+  viewHistory  ViewHistory[]
+  ratings      Rating[]
+
+  @@index([email])
+}
+
+model Material {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  author      String
+  year        Int
+  category    Category
+  fileType    FileType
+  fileUrl     String
+  previewUrl  String?
+  fileSize    Int
+  pageCount   Int?
+  tags        String[]
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  viewCount     Int @default(0)
+  downloadCount Int @default(0)
+
+  favorites   Favorite[]
+  comments    Comment[]
+  viewHistory ViewHistory[]
+  ratings     Rating[]
+
+  @@index([category])
+  @@index([year])
+  @@index([fileType])
+  @@index([title])
+}
+
+model Favorite {
+  id         String   @id @default(cuid())
+  userId     String
+  materialId String
+  createdAt  DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  material Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, materialId])
+  @@index([userId])
+}
+
+model Comment {
+  id         String   @id @default(cuid())
+  content    String
+  userId     String
+  materialId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  material Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+
+  @@index([materialId])
+}
+
+model ViewHistory {
+  id         String   @id @default(cuid())
+  userId     String
+  materialId String
+  viewedAt   DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  material Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([materialId])
+}
+
+model Rating {
+  id         String   @id @default(cuid())
+  score      Int
+  userId     String
+  materialId String
+  createdAt  DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  material Material @relation(fields: [materialId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, materialId])
+  @@index([materialId])
+}

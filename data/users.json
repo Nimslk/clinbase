@@ -1,0 +1,29 @@
+[
+  {
+    "id": "cc5151ef-175a-4244-be83-9e74e20acbf2",
+    "name": "NimsLk",
+    "email": "saidxon404@gmail.com",
+    "passwordHash": "$2a$10$yYNsido/.NXdw0VoKoLjQertQTWkIyoY6ANa5OAx9O6yz64xDIC9W",
+    "role": "USER",
+    "createdAt": "2026-06-16T16:13:40.265Z"
+  },
+  {
+    "id": "335fd1f9-49be-42be-94f4-7af3410fda67",
+    "name": "Иван Иван",
+    "email": "jagarmosh@gmail.com",
+    "passwordHash": "$2a$10$9iIiwsPSADhwTbkuIWT.feWOK3dVFbKIepgd5nqDJb0eublKtscW.",
+    "role": "USER",
+    "createdAt": "2026-06-16T18:31:02.141Z"
+  },
+  {
+    "id": "7587dc44-e41f-4321-afa7-ff0040217be3",
+    "name": "Саид",
+    "email": "saidxon100@gmail.com",
+    "passwordHash": "$2a$10$xVNq6xSEoF8oYv3NMw0bmekmzqDUa2cKR4K0nq/W3Bzlnv8kRwpBe",
+    "role": "USER",
+    "createdAt": "2026-06-16T18:47:03.769Z",
+    "emailVerified": false,
+    "verificationToken": "39f0dce4d30740a585064b07e9214c11e4d477da97f942f6a69fb43e983d8687",
+    "verificationExpires": "2026-06-17T18:47:33.511Z"
+  }
+]

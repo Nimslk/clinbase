@@ -1,0 +1,51 @@
+[
+  {
+    "id": "ec88a474-d799-4a5e-b51c-5c7e4e012510",
+    "type": "NEW_USER",
+    "audience": "ADMINS",
+    "title": "Новый пользователь",
+    "body": "Саид (saidxon100@gmail.com) зарегистрировался на платформе",
+    "link": "/admin/users",
+    "createdAt": "2026-06-16T18:47:03.773Z",
+    "readBy": [
+      "admin-root"
+    ]
+  },
+  {
+    "id": "7c96fc8d-ce1b-471b-8c30-2bc02fe6d2a2",
+    "type": "NEW_MATERIAL",
+    "audience": "USERS",
+    "title": "Новый материал добавлен",
+    "body": "«GIA_LD_25-26_Situatsionnye_zadachi_compressed_ep» — Терапия · cdc",
+    "link": "/document/05bbb4fa-cbf7-4313-869c-3d9914a9b619",
+    "createdAt": "2026-06-16T18:33:12.958Z",
+    "readBy": [
+      "7587dc44-e41f-4321-afa7-ff0040217be3"
+    ]
+  },
+  {
+    "id": "1825edd1-3337-45d5-be87-0f43f0699d7d",
+    "type": "NEW_USER",
+    "audience": "ADMINS",
+    "title": "Новый пользователь",
+    "body": "Иван Иван (jagarmosh@gmail.com) зарегистрировался на платформе",
+    "link": "/admin/users",
+    "createdAt": "2026-06-16T18:31:02.142Z",
+    "readBy": [
+      "admin-root"
+    ]
+  },
+  {
+    "id": "4cfad0b3-7b84-4561-a838-34e271b82cea",
+    "type": "NEW_MATERIAL",
+    "audience": "USERS",
+    "title": "Новый материал добавлен",
+    "body": "«[M1.Boominfo.ORG] Лекция 10 (2)» — Хирургия · kj",
+    "link": "/document/3890f59b-545f-4918-abf2-6fa858c53c6c",
+    "createdAt": "2026-06-16T16:22:41.535Z",
+    "readBy": [
+      "cc5151ef-175a-4244-be83-9e74e20acbf2",
+      "7587dc44-e41f-4321-afa7-ff0040217be3"
+    ]
+  }
+]
