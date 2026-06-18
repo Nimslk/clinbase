@@ -1,6 +1,7 @@
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import type { Metadata } from 'next'
 import { readMaterials } from '@/lib/storage'
+import { getSession } from '@/lib/auth'
 import DocumentViewer from '@/components/viewer/DocumentViewer'
 import DocumentSidebar from '@/components/viewer/DocumentSidebar'
 
@@ -12,7 +13,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: material.title }
 }
 
-export default function DocumentPage({ params }: Props) {
+export default async function DocumentPage({ params }: Props) {
+  const session = await getSession()
+  if (!session) redirect('/auth/login')
+
   const material = readMaterials().find((m) => m.id === params.id)
   if (!material) notFound()
 

@@ -1,10 +1,16 @@
 import { NextResponse } from 'next/server'
 import { readMaterials, filterMaterials } from '@/lib/storage'
+import { getSession } from '@/lib/auth'
 import type { Category, FileType } from '@/types'
 
 export const runtime = 'nodejs'
 
 export async function GET(request: Request) {
+  const session = await getSession()
+  if (!session) {
+    return NextResponse.json({ error: 'Необходима авторизация' }, { status: 401 })
+  }
+
   const { searchParams } = new URL(request.url)
 
   const materials = readMaterials()

@@ -1,14 +1,19 @@
 import { Suspense } from 'react'
 import type { Metadata } from 'next'
+import { redirect } from 'next/navigation'
+import { getSession } from '@/lib/auth'
 import LibraryContent from '@/components/library/LibraryContent'
 
 export const metadata: Metadata = { title: 'Библиотека' }
 
-export default function LibraryPage({
+export default async function LibraryPage({
   searchParams,
 }: {
   searchParams: { q?: string; category?: string; year?: string; fileType?: string; page?: string }
 }) {
+  const session = await getSession()
+  if (!session) redirect('/auth/login')
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 animate-fade-in">
       <div className="mb-8">

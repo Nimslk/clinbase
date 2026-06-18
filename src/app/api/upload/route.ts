@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { addMaterial, saveFile } from '@/lib/storage'
 import { createNotification } from '@/lib/notifications'
+import { getSession } from '@/lib/auth'
 import { CATEGORY_LABELS } from '@/types'
 import type { Category, FileType, Material } from '@/types'
 
@@ -14,6 +15,11 @@ const ALLOWED_TYPES: Record<string, FileType> = {
 
 export async function POST(request: Request) {
   try {
+    const session = await getSession()
+    if (!session || session.role !== 'ADMIN') {
+      return NextResponse.json({ error: 'Доступ запрещён' }, { status: 403 })
+    }
+
     const formData = await request.formData()
 
     const file = formData.get('file') as File | null

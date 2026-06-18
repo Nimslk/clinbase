@@ -16,7 +16,7 @@ export default function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-400 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
 
           {/* Brand + about */}
           <div className="md:col-span-1">
@@ -46,26 +46,6 @@ export default function Footer() {
                 <li key={c.href}>
                   <Link href={c.href} className="text-sm hover:text-white transition-colors">
                     {c.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Platform links */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Платформа</h3>
-            <ul className="space-y-2.5">
-              {[
-                { label: 'Главная',        href: '/' },
-                { label: 'Библиотека',     href: '/library' },
-                { label: 'Регистрация',    href: '/auth/register' },
-                { label: 'Войти',          href: '/auth/login' },
-                { label: 'Премиум',        href: '/premium' },
-              ].map((l) => (
-                <li key={l.label}>
-                  <Link href={l.href} className="text-sm hover:text-white transition-colors">
-                    {l.label}
                   </Link>
                 </li>
               ))}

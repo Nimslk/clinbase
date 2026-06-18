@@ -1,10 +1,13 @@
 import { NextResponse } from 'next/server'
 import { readMaterials, deleteMaterial, updateMaterial } from '@/lib/storage'
 import { removeByMaterialId } from '@/lib/notifications'
+import { getSession } from '@/lib/auth'
 
 export const runtime = 'nodejs'
 
 export async function GET(_req: Request, { params }: { params: { id: string } }) {
+  const session = await getSession()
+  if (!session) return NextResponse.json({ error: 'Необходима авторизация' }, { status: 401 })
   const material = readMaterials().find((m) => m.id === params.id)
   if (!material) return NextResponse.json({ error: 'Not found' }, { status: 404 })
   return NextResponse.json(material)
