@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Eye, EyeOff, Lock, Mail } from 'lucide-react'
 import Logo, { LogoIcon } from '@/components/ui/Logo'
@@ -11,7 +10,6 @@ export default function LoginPage() {
   const [showPass, setShowPass] = useState(false)
   const [error, setError]       = useState('')
   const [loading, setLoading]   = useState(false)
-  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -25,8 +23,7 @@ export default function LoginPage() {
       })
       const data = await res.json()
       if (!res.ok) { setError(data.error ?? 'Ошибка входа'); return }
-      router.push(data.role === 'ADMIN' || data.role === 'EDITOR' ? '/admin' : '/')
-      router.refresh()
+      window.location.href = (data.role === 'ADMIN' || data.role === 'EDITOR') ? '/admin' : '/'
     } catch {
       setError('Ошибка сети')
     } finally {

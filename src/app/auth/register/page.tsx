@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Eye, EyeOff, Lock, Mail, User, GraduationCap, BookOpen } from 'lucide-react'
 import { LogoIcon } from '@/components/ui/Logo'
@@ -25,7 +24,6 @@ export default function RegisterPage() {
   const [showPass, setShowPass] = useState(false)
   const [error, setError]       = useState('')
   const [loading, setLoading]   = useState(false)
-  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -46,8 +44,7 @@ export default function RegisterPage() {
       })
       const data = await res.json()
       if (!res.ok) { setError(data.error ?? 'Ошибка регистрации'); return }
-      router.push('/')
-      router.refresh()
+      window.location.href = '/'
     } catch {
       setError('Ошибка сети')
     } finally {
