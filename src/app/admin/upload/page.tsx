@@ -222,7 +222,7 @@ export default function AdminUploadPage() {
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
                 placeholder="Оставьте пустым — возьмётся имя файла"
-                className="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-medical-400 focus:ring-2 focus:ring-medical-100 transition-all"
+                className="w-full px-3.5 py-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-medical-400 focus:ring-2 focus:ring-medical-100 transition-all"
               />
             </div>
 
@@ -233,7 +233,7 @@ export default function AdminUploadPage() {
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
                 placeholder="Краткое описание содержания..."
                 rows={3}
-                className="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-xl resize-none focus:outline-none focus:border-medical-400 focus:ring-2 focus:ring-medical-100 transition-all"
+                className="w-full px-3.5 py-3 text-sm border border-gray-200 rounded-xl resize-none focus:outline-none focus:border-medical-400 focus:ring-2 focus:ring-medical-100 transition-all"
               />
             </div>
 
@@ -245,7 +245,7 @@ export default function AdminUploadPage() {
                 onChange={(e) => setForm({ ...form, author: e.target.value })}
                 placeholder="ФИО автора или организация"
                 required
-                className="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-medical-400 focus:ring-2 focus:ring-medical-100 transition-all"
+                className="w-full px-3.5 py-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-medical-400 focus:ring-2 focus:ring-medical-100 transition-all"
               />
             </div>
 
@@ -257,7 +257,7 @@ export default function AdminUploadPage() {
                 onChange={(e) => setForm({ ...form, year: Number(e.target.value) })}
                 min={2000}
                 max={new Date().getFullYear()}
-                className="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-medical-400 focus:ring-2 focus:ring-medical-100 transition-all"
+                className="w-full px-3.5 py-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-medical-400 focus:ring-2 focus:ring-medical-100 transition-all"
               />
             </div>
 
@@ -267,7 +267,7 @@ export default function AdminUploadPage() {
                 value={form.category}
                 onChange={(e) => setForm({ ...form, category: e.target.value as Category })}
                 required
-                className="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-medical-400 focus:ring-2 focus:ring-medical-100 transition-all bg-white"
+                className="w-full px-3.5 py-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-medical-400 focus:ring-2 focus:ring-medical-100 transition-all bg-white"
               >
                 <option value="">Выберите специальность</option>
                 {(Object.entries(CATEGORY_LABELS) as [Category, string][]).map(([k, v]) => (
@@ -283,7 +283,7 @@ export default function AdminUploadPage() {
                 value={form.tags}
                 onChange={(e) => setForm({ ...form, tags: e.target.value })}
                 placeholder="Через запятую: кардиология, ЭКГ..."
-                className="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-medical-400 focus:ring-2 focus:ring-medical-100 transition-all"
+                className="w-full px-3.5 py-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-medical-400 focus:ring-2 focus:ring-medical-100 transition-all"
               />
             </div>
           </div>

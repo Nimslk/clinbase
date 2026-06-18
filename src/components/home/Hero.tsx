@@ -11,9 +11,12 @@ export default function Hero() {
   const router = useRouter()
 
   useEffect(() => {
-    fetch('/api/materials?perPage=1')
+    fetch('/api/categories')
       .then((r) => r.json())
-      .then((d) => setTotalMats(d.total ?? 0))
+      .then((counts: Record<string, number>) => {
+        const total = Object.values(counts).reduce((a, b) => a + b, 0)
+        setTotalMats(total)
+      })
       .catch(() => setTotalMats(0))
   }, [])
 

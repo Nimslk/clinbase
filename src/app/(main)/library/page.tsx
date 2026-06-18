@@ -9,7 +9,7 @@ export const metadata: Metadata = { title: 'Библиотека' }
 export default async function LibraryPage({
   searchParams,
 }: {
-  searchParams: { q?: string; category?: string; year?: string; fileType?: string; page?: string }
+  searchParams: { q?: string; category?: string; page?: string }
 }) {
   const session = await getSession()
   if (!session) redirect('/auth/login')

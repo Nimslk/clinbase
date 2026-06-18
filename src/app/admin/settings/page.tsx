@@ -38,7 +38,7 @@ export default function AdminSettingsPage() {
               type={type}
               value={form[key as keyof typeof form] as string}
               onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-              className="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-medical-400 focus:ring-2 focus:ring-medical-100 transition-all"
+              className="w-full px-3.5 py-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:border-medical-400 focus:ring-2 focus:ring-medical-100 transition-all"
             />
           </div>
         ))}
@@ -89,7 +89,7 @@ export default function AdminSettingsPage() {
                 value={form[key as keyof typeof form] as string}
                 onChange={(e) => setForm({ ...form, [key]: e.target.value })}
                 placeholder="••••••••"
-                className="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-xl pr-10 focus:outline-none focus:border-medical-400 focus:ring-2 focus:ring-medical-100 transition-all"
+                className="w-full px-3.5 py-3 text-sm border border-gray-200 rounded-xl pr-10 focus:outline-none focus:border-medical-400 focus:ring-2 focus:ring-medical-100 transition-all"
               />
               <button
                 type="button"
