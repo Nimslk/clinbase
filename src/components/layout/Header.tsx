@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { Menu, X, LogOut, Settings, ChevronDown, Crown, Microscope, Users, Sun, Moon, Info } from 'lucide-react'
 import { useTheme } from '@/components/providers/ThemeProvider'
-import { useRouter } from 'next/navigation'
 import NotificationBell from './NotificationBell'
 import Logo, { LogoIcon } from '@/components/ui/Logo'
 
@@ -26,7 +25,6 @@ export default function Header() {
   const [me, setMe]               = useState<Me | null | 'loading'>('loading')
   const [userMenu, setUserMenu]   = useState(false)
   const dropRef = useRef<HTMLDivElement>(null)
-  const router  = useRouter()
 
   useEffect(() => {
     fetch('/api/auth/me').then((r) => r.json()).then(setMe).catch(() => setMe(null))
@@ -39,11 +37,6 @@ export default function Header() {
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
   }, [])
-
-  const logout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' })
-    window.location.href = '/'
-  }
 
   const { theme, toggle: toggleTheme } = useTheme()
   const isLoggedIn = me && me !== 'loading'
@@ -147,11 +140,11 @@ export default function Header() {
                         Панель управления
                       </Link>
                     )}
-                    <button onClick={logout}
-                      className="flex items-center gap-2.5 px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors w-full text-left">
+                    <a href="/api/auth/logout"
+                      className="flex items-center gap-2.5 px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors w-full">
                       <LogOut className="w-4 h-4" />
                       Выйти
-                    </button>
+                    </a>
                   </div>
                 )}
               </div>
@@ -193,10 +186,10 @@ export default function Header() {
                         <Settings className="w-4 h-4 text-gray-400" />Панель управления
                       </Link>
                     )}
-                    <button onClick={logout}
-                      className="flex items-center gap-2.5 px-4 py-2 text-sm text-red-500 hover:bg-red-50 w-full text-left">
+                    <a href="/api/auth/logout"
+                      className="flex items-center gap-2.5 px-4 py-2 text-sm text-red-500 hover:bg-red-50 w-full">
                       <LogOut className="w-4 h-4" />Выйти
-                    </button>
+                    </a>
                   </div>
                 )}
               </button>

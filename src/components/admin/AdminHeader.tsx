@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { LogOut, Globe, ChevronDown } from 'lucide-react'
 import NotificationBell from '@/components/layout/NotificationBell'
-import { useRouter } from 'next/navigation'
 
 interface Me { userId: string; email: string; role: string; name?: string; avatarEmoji?: string }
 
@@ -16,7 +15,6 @@ export default function AdminHeader() {
   const [me, setMe]     = useState<Me | null>(null)
   const [open, setOpen] = useState(false)
   const dropRef = useRef<HTMLDivElement>(null)
-  const router  = useRouter()
 
   useEffect(() => {
     fetch('/api/auth/me').then((r) => r.json()).then(setMe).catch(() => {})
@@ -29,11 +27,6 @@ export default function AdminHeader() {
     document.addEventListener('mousedown', h)
     return () => document.removeEventListener('mousedown', h)
   }, [])
-
-  const logout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' })
-    window.location.href = '/'
-  }
 
   return (
     <header className="h-16 bg-white border-b border-gray-100 flex items-center justify-between px-6">
@@ -79,10 +72,10 @@ export default function AdminHeader() {
                   className="flex items-center gap-2.5 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
                   <Globe className="w-4 h-4 text-gray-400" />Вернуться на сайт
                 </a>
-                <button onClick={logout}
-                  className="flex items-center gap-2.5 px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors w-full text-left">
+                <a href="/api/auth/logout"
+                  className="flex items-center gap-2.5 px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors w-full">
                   <LogOut className="w-4 h-4" />Выйти
-                </button>
+                </a>
               </div>
             )}
           </div>
