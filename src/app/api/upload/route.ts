@@ -43,7 +43,7 @@ export async function POST(request: Request) {
 
     const bytes   = await file.arrayBuffer()
     const buffer  = Buffer.from(bytes)
-    const fileUrl = saveFile(buffer, file.name)
+    const fileUrl = await saveFile(buffer, file.name)
 
     const material: Material = {
       id:            crypto.randomUUID(),

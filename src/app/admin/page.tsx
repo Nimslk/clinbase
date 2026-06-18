@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState, useCallback } from 'react'
-import { TrendingUp, FileText, Users, Download, Eye, ArrowUpRight, RefreshCw } from 'lucide-react'
+import { TrendingUp, FileText, Users, Download, Eye, ArrowUpRight, RefreshCw, Upload, BarChart3, Settings, MessageSquare } from 'lucide-react'
 import { CATEGORY_LABELS, formatFileSize } from '@/types'
 import { formatNumber } from '@/lib/utils'
 import Link from 'next/link'
@@ -39,11 +39,18 @@ export default function AdminDashboard() {
   }, [load])
 
   const STAT_CARDS = stats ? [
-    { icon: FileText, label: 'Материалов',    value: stats.totalMaterials,  color: 'from-blue-500 to-blue-600',       hint: 'загружено на платформу' },
-    { icon: Users,    label: 'Пользователей', value: stats.totalUsers,      color: 'from-emerald-500 to-emerald-600', hint: 'зарегистрировано' },
-    { icon: Eye,      label: 'Просмотров',    value: stats.totalViews,      color: 'from-purple-500 to-purple-600',   hint: 'всего за всё время' },
-    { icon: Download, label: 'Скачиваний',    value: stats.totalDownloads,  color: 'from-amber-500 to-amber-600',     hint: 'всего за всё время' },
+    { icon: FileText, label: 'Материалов',    value: stats.totalMaterials,  color: 'from-blue-500 to-blue-600',       hint: 'загружено на платформу', href: '/admin/materials' },
+    { icon: Users,    label: 'Пользователей', value: stats.totalUsers,      color: 'from-emerald-500 to-emerald-600', hint: 'зарегистрировано',       href: '/admin/users' },
+    { icon: Eye,      label: 'Просмотров',    value: stats.totalViews,      color: 'from-purple-500 to-purple-600',   hint: 'всего за всё время',    href: '/admin/stats' },
+    { icon: Download, label: 'Скачиваний',    value: stats.totalDownloads,  color: 'from-amber-500 to-amber-600',     hint: 'всего за всё время',    href: '/admin/stats' },
   ] : []
+
+  const QUICK_ACTIONS = [
+    { icon: Upload,       label: 'Загрузить файл',    href: '/admin/upload',    color: 'bg-medical-600 hover:bg-medical-700 text-white' },
+    { icon: Users,        label: 'Пользователи',      href: '/admin/users',     color: 'bg-emerald-600 hover:bg-emerald-700 text-white' },
+    { icon: BarChart3,    label: 'Аналитика',         href: '/admin/stats',     color: 'bg-purple-600 hover:bg-purple-700 text-white' },
+    { icon: Settings,     label: 'Настройки',         href: '/admin/settings',  color: 'bg-gray-600 hover:bg-gray-700 text-white' },
+  ]
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -84,7 +91,7 @@ export default function AdminDashboard() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {STAT_CARDS.map((s) => (
-            <div key={s.label} className="bg-white rounded-2xl border border-gray-100 p-5 relative overflow-hidden group hover:shadow-md transition-shadow">
+            <Link key={s.label} href={s.href} className="bg-white rounded-2xl border border-gray-100 p-5 relative overflow-hidden group hover:shadow-md hover:border-medical-200 hover:-translate-y-0.5 transition-all cursor-pointer">
               <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${s.color} opacity-5 rounded-full -translate-y-8 translate-x-8 group-hover:opacity-10 transition-opacity`} />
               <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${s.color} flex items-center justify-center mb-4`}>
                 <s.icon className="w-5 h-5 text-white" />
@@ -95,7 +102,19 @@ export default function AdminDashboard() {
                 <TrendingUp className="w-3 h-3 text-emerald-500" />
                 {s.hint}
               </p>
-            </div>
+              <ArrowUpRight className="absolute top-4 right-4 w-3.5 h-3.5 text-gray-300 group-hover:text-medical-400 transition-colors" />
+            </Link>
+          ))}
+        </div>
+
+        {/* Quick actions */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {QUICK_ACTIONS.map((a) => (
+            <Link key={a.label} href={a.href}
+              className={`flex items-center gap-2.5 px-4 py-3 rounded-xl text-sm font-medium transition-colors shadow-sm ${a.color}`}>
+              <a.icon className="w-4 h-4 shrink-0" />
+              {a.label}
+            </Link>
           ))}
         </div>
       )}

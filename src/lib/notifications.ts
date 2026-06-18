@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-const FILE = path.join(process.cwd(), 'data', 'notifications.json')
+import { dataPath } from './data-path'
 
 export type NotifType = 'NEW_USER' | 'NEW_MATERIAL'
 export type NotifAudience = 'ADMINS' | 'USERS' | 'ALL'
@@ -19,13 +19,12 @@ export interface Notification {
 }
 
 function read(): Notification[] {
-  if (!fs.existsSync(FILE)) return []
-  try { return JSON.parse(fs.readFileSync(FILE, 'utf-8')) } catch { return [] }
+  const file = dataPath('notifications.json')
+  try { return JSON.parse(fs.readFileSync(file, 'utf-8')) } catch { return [] }
 }
 
 function write(list: Notification[]) {
-  fs.mkdirSync(path.dirname(FILE), { recursive: true })
-  fs.writeFileSync(FILE, JSON.stringify(list, null, 2), 'utf-8')
+  fs.writeFileSync(dataPath('notifications.json'), JSON.stringify(list, null, 2), 'utf-8')
 }
 
 export function createNotification(

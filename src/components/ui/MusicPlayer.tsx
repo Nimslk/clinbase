@@ -1,52 +1,71 @@
 'use client'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Play, Pause } from 'lucide-react'
 
 const VIDEO_ID = 'qwosU7e9mqc'
 
+declare global {
+  interface Window {
+    YT: { Player: new (...args: any[]) => any }
+    onYouTubeIframeAPIReady: () => void
+  }
+}
+
 export default function MusicPlayer() {
   const [playing, setPlaying] = useState(false)
-  const iframeRef = useRef<HTMLIFrameElement>(null)
+  const [ready, setReady]     = useState(false)
+  const playerRef = useRef<any>(null)
+  const divId     = 'yt-bg-player'
+
+  useEffect(() => {
+    const init = () => {
+      if (playerRef.current) return
+      playerRef.current = new window.YT.Player(divId, {
+        videoId: VIDEO_ID,
+        playerVars: {
+          loop: 1, playlist: VIDEO_ID,
+          controls: 0, disablekb: 1, modestbranding: 1, rel: 0,
+        },
+        events: { onReady: () => setReady(true) },
+      })
+    }
+
+    if (window.YT?.Player) {
+      init()
+    } else {
+      window.onYouTubeIframeAPIReady = init
+      if (!document.getElementById('yt-api-script')) {
+        const tag = document.createElement('script')
+        tag.id  = 'yt-api-script'
+        tag.src = 'https://www.youtube.com/iframe_api'
+        document.head.appendChild(tag)
+      }
+    }
+  }, [])
 
   const toggle = () => {
-    if (!playing) {
-      // start: load iframe
-      setPlaying(true)
+    if (!playerRef.current || !ready) return
+    if (playing) {
+      playerRef.current.pauseVideo()
     } else {
-      // stop: unload iframe
-      setPlaying(false)
+      playerRef.current.playVideo()
     }
+    setPlaying((v) => !v)
   }
-
-  const src = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&loop=1&playlist=${VIDEO_ID}&controls=0&disablekb=1&modestbranding=1&rel=0`
 
   return (
     <>
-      {/* Hidden iframe */}
-      {playing && (
-        <iframe
-          ref={iframeRef}
-          src={src}
-          allow="autoplay; encrypted-media"
-          className="sr-only pointer-events-none"
-          title="music"
-          width="1"
-          height="1"
-        />
-      )}
+      <div id={divId} className="sr-only pointer-events-none" style={{ width: 1, height: 1, position: 'absolute' }} />
 
-      {/* Floating button */}
       <button
         onClick={toggle}
         title={playing ? 'Выключить музыку' : 'Включить музыку'}
-        className="fixed bottom-6 left-6 z-50 w-13 h-13 flex items-center justify-center rounded-full shadow-xl transition-all duration-300 hover:scale-110 focus:outline-none"
+        className="fixed bottom-6 left-6 z-50 flex items-center justify-center rounded-full shadow-xl transition-all duration-300 hover:scale-110 focus:outline-none"
         style={{ width: 52, height: 52 }}
       >
-        {/* Animated ring when playing */}
         {playing && (
           <span className="absolute inset-0 rounded-full bg-medical-400 opacity-25 animate-ping" />
         )}
-
         <span className={`relative w-full h-full rounded-full flex items-center justify-center transition-all duration-300 ${
           playing
             ? 'bg-gradient-to-br from-medical-500 to-medical-700 shadow-medical-500/40 shadow-lg'

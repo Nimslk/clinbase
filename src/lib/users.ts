@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import bcrypt from 'bcryptjs'
 
-const FILE = path.join(process.cwd(), 'data', 'users.json')
+import { dataPath } from './data-path'
 
 const AVATARS = ['🩺','💊','🔬','🧬','🏥','📋','🩻','💉','🫀','🧠','🦷','🧪','📚','🔭','🩹','🏨','⚕️','👨‍⚕️','👩‍⚕️','🌡️']
 
@@ -22,13 +22,12 @@ export interface StoredUser {
 }
 
 function read(): StoredUser[] {
-  if (!fs.existsSync(FILE)) return []
-  try { return JSON.parse(fs.readFileSync(FILE, 'utf-8')) } catch { return [] }
+  const file = dataPath('users.json')
+  try { return JSON.parse(fs.readFileSync(file, 'utf-8')) } catch { return [] }
 }
 
 function write(users: StoredUser[]) {
-  fs.mkdirSync(path.dirname(FILE), { recursive: true })
-  fs.writeFileSync(FILE, JSON.stringify(users, null, 2), 'utf-8')
+  fs.writeFileSync(dataPath('users.json'), JSON.stringify(users, null, 2), 'utf-8')
 }
 
 export function findByEmail(email: string): StoredUser | undefined {
