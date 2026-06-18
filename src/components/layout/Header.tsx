@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
-import { Menu, X, LogOut, Settings, ChevronDown, Crown, Microscope, Users, Sun, Moon } from 'lucide-react'
+import { Menu, X, LogOut, Settings, ChevronDown, Crown, Microscope, Users, Sun, Moon, Info } from 'lucide-react'
 import { useTheme } from '@/components/providers/ThemeProvider'
 import { useRouter } from 'next/navigation'
 import NotificationBell from './NotificationBell'
@@ -90,6 +90,11 @@ export default function Header() {
             <Link href="/articles" className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-600 hover:text-medical-600 hover:bg-medical-50 rounded-lg transition-colors">
               <Microscope className="w-4 h-4" />
               Статьи
+            </Link>
+
+            <Link href="/about" className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-gray-600 hover:text-medical-600 hover:bg-medical-50 rounded-lg transition-colors">
+              <Info className="w-4 h-4" />
+              О проекте
             </Link>
 
 {isLoggedIn && (
@@ -217,6 +222,10 @@ export default function Header() {
           <Link href="/articles" onClick={() => setMenuOpen(false)}
             className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-medical-600 rounded-lg hover:bg-medical-50 transition-colors">
             <Microscope className="w-4 h-4" /> Статьи
+          </Link>
+          <Link href="/about" onClick={() => setMenuOpen(false)}
+            className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-medical-600 rounded-lg hover:bg-medical-50 transition-colors">
+            <Info className="w-4 h-4" /> О проекте
           </Link>
           {isLoggedIn && (
             <Link href="/community" onClick={() => setMenuOpen(false)}
