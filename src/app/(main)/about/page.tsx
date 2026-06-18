@@ -130,7 +130,10 @@ export default function AboutPage() {
           </div>
         </div>
         <div className="mt-8 pt-6 border-t border-gray-800 text-sm text-gray-600">
-          Основатель: <span className="text-gray-300 font-medium">Эркинов М. Л.</span>
+          Основатели:{' '}
+          <span className="text-gray-300 font-medium">Эркинов М. Л.</span>
+          <span className="mx-2 text-gray-700">·</span>
+          <span className="text-gray-300 font-medium">Абдуназаров А. А.</span>
         </div>
       </div>
 

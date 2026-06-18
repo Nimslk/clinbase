@@ -92,8 +92,9 @@ export default function Footer() {
 
             {/* Designer credit */}
             <div className="mt-6 pt-5 border-t border-gray-800">
-              <p className="text-xs text-gray-500">Основатель</p>
+              <p className="text-xs text-gray-500">Основатели</p>
               <p className="text-sm text-gray-300 font-medium mt-1">Эркинов М. Л.</p>
+              <p className="text-sm text-gray-300 font-medium mt-0.5">Абдуназаров А. А.</p>
             </div>
           </div>
         </div>
