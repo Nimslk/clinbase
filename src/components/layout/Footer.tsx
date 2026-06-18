@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { MapPin, Phone, Send } from 'lucide-react'
+import { MapPin, Send } from 'lucide-react'
 import Logo from '@/components/ui/Logo'
 
 const CATEGORY_LINKS = [
@@ -79,12 +79,6 @@ export default function Footer() {
               <li className="flex items-start gap-2.5 text-sm">
                 <MapPin className="w-4 h-4 text-medical-400 shrink-0 mt-0.5" />
                 <span>Санкт-Петербург, Россия</span>
-              </li>
-              <li className="flex items-center gap-2.5 text-sm">
-                <Phone className="w-4 h-4 text-medical-400 shrink-0" />
-                <a href="tel:+79657863834" className="hover:text-white transition-colors">
-                  +7 965 786-38-34
-                </a>
               </li>
               <li className="flex items-center gap-2.5 text-sm">
                 <Send className="w-4 h-4 text-medical-400 shrink-0" />
