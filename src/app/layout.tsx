@@ -3,14 +3,20 @@ import './globals.css'
 import ThemeProvider from '@/components/providers/ThemeProvider'
 
 export const metadata: Metadata = {
-  title: { default: 'ClinBase', template: '%s — ClinBase' },
-  description: 'ClinBase — профессиональная клиническая база медицинских материалов для врачей и студентов',
-  keywords: ['медицина', 'методички', 'клинические рекомендации', 'врачи', 'библиотека', 'ClinBase'],
+  title: { default: 'ClinBase — Медицинская библиотека', template: '%s — ClinBase' },
+  description: 'ClinBase — образовательная медицинская платформа. Учебники, клинические руководства, методические пособия и атласы для врачей, ординаторов и студентов медицинских вузов.',
+  keywords: ['медицинская библиотека', 'клинические рекомендации', 'медицинские учебники', 'методические пособия', 'ординатура', 'медицинский университет', 'ClinBase', 'clinbase.ru'],
+  metadataBase: new URL('https://clinbase.ru'),
+  alternates: { canonical: 'https://clinbase.ru' },
   openGraph: {
-    title: 'ClinBase',
-    description: 'Клиническая база медицинских материалов',
+    title: 'ClinBase — Образовательная медицинская платформа',
+    description: 'Учебники, клинические руководства, методические пособия и атласы для врачей, ординаторов и студентов медицинских вузов. Совместный проект СПбГПМУ и ТГМУ.',
+    url: 'https://clinbase.ru',
+    siteName: 'ClinBase',
+    locale: 'ru_RU',
     type: 'website',
   },
+  robots: { index: true, follow: true },
 }
 
 // Anti-FOUC: apply saved theme before first paint
