@@ -89,34 +89,36 @@ export default function AdminDashboard() {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {STAT_CARDS.map((s) => (
-            <Link key={s.label} href={s.href} className="bg-white rounded-2xl border border-gray-100 p-5 relative overflow-hidden group hover:shadow-md hover:border-medical-200 hover:-translate-y-0.5 transition-all cursor-pointer">
-              <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${s.color} opacity-5 rounded-full -translate-y-8 translate-x-8 group-hover:opacity-10 transition-opacity`} />
-              <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${s.color} flex items-center justify-center mb-4`}>
-                <s.icon className="w-5 h-5 text-white" />
-              </div>
-              <p className="text-2xl font-bold text-gray-900">{formatNumber(s.value)}</p>
-              <p className="text-sm font-medium text-gray-700 mt-0.5">{s.label}</p>
-              <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
-                <TrendingUp className="w-3 h-3 text-emerald-500" />
-                {s.hint}
-              </p>
-              <ArrowUpRight className="absolute top-4 right-4 w-3.5 h-3.5 text-gray-300 group-hover:text-medical-400 transition-colors" />
-            </Link>
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {STAT_CARDS.map((s) => (
+              <Link key={s.label} href={s.href} className="bg-white rounded-2xl border border-gray-100 p-5 relative overflow-hidden group hover:shadow-md hover:border-medical-200 hover:-translate-y-0.5 transition-all cursor-pointer">
+                <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${s.color} opacity-5 rounded-full -translate-y-8 translate-x-8 group-hover:opacity-10 transition-opacity`} />
+                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${s.color} flex items-center justify-center mb-4`}>
+                  <s.icon className="w-5 h-5 text-white" />
+                </div>
+                <p className="text-2xl font-bold text-gray-900">{formatNumber(s.value)}</p>
+                <p className="text-sm font-medium text-gray-700 mt-0.5">{s.label}</p>
+                <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                  <TrendingUp className="w-3 h-3 text-emerald-500" />
+                  {s.hint}
+                </p>
+                <ArrowUpRight className="absolute top-4 right-4 w-3.5 h-3.5 text-gray-300 group-hover:text-medical-400 transition-colors" />
+              </Link>
+            ))}
+          </div>
 
-        {/* Quick actions */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {QUICK_ACTIONS.map((a) => (
-            <Link key={a.label} href={a.href}
-              className={`flex items-center gap-2.5 px-4 py-3 rounded-xl text-sm font-medium transition-colors shadow-sm ${a.color}`}>
-              <a.icon className="w-4 h-4 shrink-0" />
-              {a.label}
-            </Link>
-          ))}
-        </div>
+          {/* Quick actions */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {QUICK_ACTIONS.map((a) => (
+              <Link key={a.label} href={a.href}
+                className={`flex items-center gap-2.5 px-4 py-3 rounded-xl text-sm font-medium transition-colors shadow-sm ${a.color}`}>
+                <a.icon className="w-4 h-4 shrink-0" />
+                {a.label}
+              </Link>
+            ))}
+          </div>
+        </>
       )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
