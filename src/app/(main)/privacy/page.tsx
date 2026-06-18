@@ -47,7 +47,7 @@ export default function PrivacyPage() {
         <p className="text-gray-500 text-sm">
           Оператор персональных данных: Администрация платформы <strong className="text-gray-700">ClinBase</strong>
           <span className="mx-2 text-gray-300">·</span>
-          clinbase.ru
+          <a href="https://clinbase.ru" className="text-medical-600 hover:underline">clinbase.ru</a>
         </p>
       </div>
 
@@ -150,7 +150,7 @@ export default function PrivacyPage() {
 
         <Section num="10" title="Изменение Политики конфиденциальности">
           <P>Оператор вправе вносить изменения в настоящую Политику в одностороннем порядке. При внесении изменений, существенно затрагивающих права Пользователей, последние уведомляются по адресу электронной почты не менее чем за 14 календарных дней до вступления изменений в силу.</P>
-          <P>Актуальная редакция Политики размещается на странице <strong className="text-gray-700">clinbase.ru/privacy</strong> и является единственной действующей версией документа.</P>
+          <P>Актуальная редакция Политики размещается на странице <a href="https://clinbase.ru/privacy" className="text-medical-600 hover:underline font-medium">clinbase.ru/privacy</a> и является единственной действующей версией документа.</P>
         </Section>
 
         {/* Contacts */}

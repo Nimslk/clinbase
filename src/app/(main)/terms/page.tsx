@@ -47,7 +47,7 @@ export default function TermsPage() {
         <p className="text-gray-500 text-sm">
           Редакция № 1 от 18 июня 2026 г.
           <span className="mx-2 text-gray-300">·</span>
-          clinbase.ru
+          <a href="https://clinbase.ru" className="text-medical-600 hover:underline">clinbase.ru</a>
         </p>
       </div>
 
@@ -183,7 +183,7 @@ export default function TermsPage() {
         <div className="mt-10 pt-8 border-t border-gray-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="text-sm text-gray-500 space-y-1">
             <div>Служба поддержки: <a href="mailto:nexusecho@mail.ru" className="text-medical-600 hover:underline font-medium">nexusecho@mail.ru</a></div>
-            <div>Официальный сайт: <span className="font-medium text-gray-700">clinbase.ru</span></div>
+            <div>Официальный сайт: <a href="https://clinbase.ru" className="text-medical-600 hover:underline font-medium">clinbase.ru</a></div>
           </div>
           <Link href="/privacy" className="text-sm text-medical-600 hover:underline font-medium">
             Политика конфиденциальности →
