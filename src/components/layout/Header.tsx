@@ -42,10 +42,7 @@ export default function Header() {
 
   const logout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' })
-    setMe(null)
-    setUserMenu(false)
-    router.push('/')
-    router.refresh()
+    window.location.href = '/'
   }
 
   const { theme, toggle: toggleTheme } = useTheme()

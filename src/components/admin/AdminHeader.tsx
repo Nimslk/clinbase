@@ -32,7 +32,7 @@ export default function AdminHeader() {
 
   const logout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' })
-    router.push('/')
+    window.location.href = '/'
   }
 
   return (
