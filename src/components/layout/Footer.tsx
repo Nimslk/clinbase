@@ -105,8 +105,8 @@ export default function Footer() {
             <span className="ml-1 text-gray-600">Совместный проект студентов СПбГПМУ и ТГМУ.</span>
           </div>
           <div className="flex items-center gap-6">
-            <Link href="#" className="text-xs hover:text-white transition-colors">Политика конфиденциальности</Link>
-            <Link href="#" className="text-xs hover:text-white transition-colors">Условия использования</Link>
+            <Link href="/privacy" className="text-xs hover:text-white transition-colors">Политика конфиденциальности</Link>
+            <Link href="/terms" className="text-xs hover:text-white transition-colors">Условия использования</Link>
           </div>
         </div>
       </div>
