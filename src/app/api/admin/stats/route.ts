@@ -5,7 +5,7 @@ import { allUsers } from '@/lib/users'
 export const runtime = 'nodejs'
 
 export async function GET() {
-  const materials = readMaterials()
+  const materials = await readMaterials()
   const users     = allUsers()
 
   const totalMaterials  = materials.length

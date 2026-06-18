@@ -1,39 +1,75 @@
 import fs from 'fs'
 import path from 'path'
-import { put } from '@vercel/blob'
+import { put, list } from '@vercel/blob'
 import { dataPath } from './data-path'
 import type { Material } from '@/types'
 
-export function readMaterials(): Material[] {
-  const file = dataPath('materials.json')
-  try { return JSON.parse(fs.readFileSync(file, 'utf-8')) as Material[] } catch { return [] }
+const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN
+const MATERIALS_KEY = 'data/materials.json'
+
+// Cache the blob URL within a warm instance
+let _materialsUrl: string | undefined
+
+async function getMaterialsBlobUrl(): Promise<string | undefined> {
+  if (_materialsUrl) return _materialsUrl
+  try {
+    const { blobs } = await list({ prefix: MATERIALS_KEY })
+    _materialsUrl = blobs[0]?.url
+    return _materialsUrl
+  } catch {
+    return undefined
+  }
 }
 
-export function writeMaterials(materials: Material[]) {
-  fs.writeFileSync(dataPath('materials.json'), JSON.stringify(materials, null, 2), 'utf-8')
+export async function readMaterials(): Promise<Material[]> {
+  if (!BLOB_TOKEN) {
+    const file = dataPath('materials.json')
+    try { return JSON.parse(fs.readFileSync(file, 'utf-8')) as Material[] } catch { return [] }
+  }
+  try {
+    const url = await getMaterialsBlobUrl()
+    if (!url) return []
+    const res = await fetch(url, { cache: 'no-store' })
+    if (!res.ok) return []
+    return res.json()
+  } catch {
+    return []
+  }
 }
 
-export function addMaterial(material: Material) {
-  const all = readMaterials()
+export async function writeMaterials(materials: Material[]): Promise<void> {
+  if (!BLOB_TOKEN) {
+    fs.writeFileSync(dataPath('materials.json'), JSON.stringify(materials, null, 2), 'utf-8')
+    return
+  }
+  const { url } = await put(MATERIALS_KEY, JSON.stringify(materials), {
+    access: 'public',
+    addRandomSuffix: false,
+  })
+  _materialsUrl = url
+}
+
+export async function addMaterial(material: Material): Promise<Material> {
+  const all = await readMaterials()
   all.unshift(material)
-  writeMaterials(all)
+  await writeMaterials(all)
   return material
 }
 
-export function deleteMaterial(id: string): boolean {
-  const all = readMaterials()
+export async function deleteMaterial(id: string): Promise<boolean> {
+  const all = await readMaterials()
   const item = all.find((m) => m.id === id)
   if (!item) return false
-  writeMaterials(all.filter((m) => m.id !== id))
+  await writeMaterials(all.filter((m) => m.id !== id))
   return true
 }
 
-export function updateMaterial(id: string, patch: Partial<Material>): Material | null {
-  const all = readMaterials()
+export async function updateMaterial(id: string, patch: Partial<Material>): Promise<Material | null> {
+  const all = await readMaterials()
   const idx = all.findIndex((m) => m.id === id)
   if (idx === -1) return null
   all[idx] = { ...all[idx], ...patch, updatedAt: new Date().toISOString() }
-  writeMaterials(all)
+  await writeMaterials(all)
   return all[idx]
 }
 
@@ -41,7 +77,7 @@ export async function saveFile(buffer: Buffer, filename: string): Promise<string
   const safe   = filename.replace(/[^a-zA-Z0-9._-]/g, '_')
   const unique = `${Date.now()}_${safe}`
 
-  if (process.env.BLOB_READ_WRITE_TOKEN) {
+  if (BLOB_TOKEN) {
     const { url } = await put(`uploads/${unique}`, buffer, {
       access: 'public',
       addRandomSuffix: false,
@@ -49,7 +85,6 @@ export async function saveFile(buffer: Buffer, filename: string): Promise<string
     return url
   }
 
-  // Local dev: write to public/uploads
   const dir = path.join(process.cwd(), 'public', 'uploads')
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
   fs.writeFileSync(path.join(dir, unique), buffer)

@@ -63,7 +63,7 @@ export async function POST(request: Request) {
       updatedAt:     new Date().toISOString(),
     }
 
-    addMaterial(material)
+    await addMaterial(material)
 
     createNotification({
       type:       'NEW_MATERIAL',

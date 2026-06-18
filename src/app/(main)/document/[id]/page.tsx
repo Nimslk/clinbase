@@ -8,7 +8,8 @@ import DocumentSidebar from '@/components/viewer/DocumentSidebar'
 interface Props { params: { id: string } }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const material = readMaterials().find((m) => m.id === params.id)
+  const materials = await readMaterials()
+  const material = materials.find((m) => m.id === params.id)
   if (!material) return { title: 'Не найдено' }
   return { title: material.title }
 }
@@ -17,7 +18,8 @@ export default async function DocumentPage({ params }: Props) {
   const session = await getSession()
   if (!session) redirect('/auth/login')
 
-  const material = readMaterials().find((m) => m.id === params.id)
+  const materials = await readMaterials()
+  const material = materials.find((m) => m.id === params.id)
   if (!material) notFound()
 
   return (

@@ -13,7 +13,7 @@ export async function GET(request: Request) {
 
   const { searchParams } = new URL(request.url)
 
-  const materials = readMaterials()
+  const materials = await readMaterials()
   const result = filterMaterials(materials, {
     query:    searchParams.get('q')        ?? undefined,
     category: (searchParams.get('category') as Category) ?? undefined,

@@ -5,7 +5,7 @@ import type { Category } from '@/types'
 export const runtime = 'nodejs'
 
 export async function GET() {
-  const materials = readMaterials()
+  const materials = await readMaterials()
 
   const counts: Record<string, number> = {}
   for (const m of materials) {
