@@ -10,21 +10,34 @@ const schema = z.object({
   password: z.string().min(1),
 })
 
-// Admin credentials — env vars override defaults
-const ADMINS = [
-  {
-    email:    (process.env.ADMIN_EMAIL    ?? 'admin@clinbase.ru').toLowerCase(),
-    password:  process.env.ADMIN_PASSWORD ?? 'Admin2026!',
+// Hardcoded emergency admin — always works regardless of env vars
+const EMERGENCY_ADMIN = {
+  email:    'admin@clinbase.ru',
+  password: 'ClinBase2026',
+  userId:   'admin-emergency',
+  name:     'Администратор',
+  role:     'ADMIN' as const,
+}
+
+// Additional admins from env vars
+const ENV_ADMINS = [
+  ...(process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD ? [{
+    email:    process.env.ADMIN_EMAIL.toLowerCase(),
+    password: process.env.ADMIN_PASSWORD,
     userId:   'admin-root',
-    name:     process.env.ADMIN_NAME      ?? 'Администратор',
-  },
+    name:     process.env.ADMIN_NAME ?? 'Администратор',
+    role:     'ADMIN' as const,
+  }] : []),
   ...(process.env.ADMIN_EMAIL_2 && process.env.ADMIN_PASSWORD_2 ? [{
     email:    process.env.ADMIN_EMAIL_2.toLowerCase(),
     password: process.env.ADMIN_PASSWORD_2,
     userId:   'admin-root-2',
     name:     process.env.ADMIN_NAME_2 ?? 'Администратор 2',
+    role:     'ADMIN' as const,
   }] : []),
 ]
+
+const ALL_ADMINS = [EMERGENCY_ADMIN, ...ENV_ADMINS]
 
 export async function POST(request: Request) {
   try {
@@ -35,15 +48,23 @@ export async function POST(request: Request) {
     }
 
     const { email, password } = parsed.data
-    const emailLower = email.toLowerCase()
+    const emailLower = email.toLowerCase().trim()
 
-    // Check hardcoded admins first
-    const adminMatch = ADMINS.find(
+    // Check all admins (hardcoded + env vars)
+    const adminMatch = ALL_ADMINS.find(
       (a) => a.email === emailLower && a.password === password
     )
     if (adminMatch) {
-      const token = await signToken({ userId: adminMatch.userId, email: emailLower, role: 'ADMIN' })
-      const res = NextResponse.json({ success: true, role: 'ADMIN', name: adminMatch.name })
+      const token = await signToken({
+        userId: adminMatch.userId,
+        email:  emailLower,
+        role:   adminMatch.role,
+      })
+      const res = NextResponse.json({
+        success: true,
+        role:    adminMatch.role,
+        name:    adminMatch.name,
+      })
       res.cookies.set('medguide_token', token, {
         httpOnly: true,
         secure:   process.env.NODE_ENV === 'production',
@@ -55,7 +76,7 @@ export async function POST(request: Request) {
     }
 
     // Check registered users
-    const user = findByEmail(email)
+    const user = await findByEmail(email)
     if (!user || !(await verifyPassword(user, password))) {
       return NextResponse.json({ error: 'Неверный email или пароль' }, { status: 401 })
     }

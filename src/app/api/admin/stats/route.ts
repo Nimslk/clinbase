@@ -6,7 +6,7 @@ export const runtime = 'nodejs'
 
 export async function GET() {
   const materials = await readMaterials()
-  const users     = allUsers()
+  const users     = await allUsers()
 
   const totalMaterials  = materials.length
   const totalUsers      = users.length

@@ -9,11 +9,11 @@ export async function POST(request: Request) {
   const session = await getSession(request)
   if (!session) return NextResponse.json({ error: 'Не авторизован' }, { status: 401 })
 
-  const user = findByEmail(session.email)
+  const user = await findByEmail(session.email)
   if (!user) return NextResponse.json({ error: 'Пользователь не найден' }, { status: 404 })
   if (user.emailVerified) return NextResponse.json({ error: 'Email уже подтверждён' }, { status: 400 })
 
-  const token = refreshVerificationToken(user.email)
+  const token = await refreshVerificationToken(user.email)
   if (!token) return NextResponse.json({ error: 'Не удалось создать токен' }, { status: 500 })
 
   try {

@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   const { content, category } = await req.json()
   if (!content?.trim()) return NextResponse.json({ error: 'Напишите что-нибудь' }, { status: 400 })
 
-  const user = findById(session.userId)
+  const user = await findById(session.userId)
   const post = createPost({
     userId:      session.userId,
     userName:    user?.name ?? session.email.split('@')[0],

@@ -9,7 +9,7 @@ export async function GET(request: Request) {
   if (!token) {
     return NextResponse.json({ error: 'Токен не указан' }, { status: 400 })
   }
-  const result = verifyEmailToken(token)
+  const result = await verifyEmailToken(token)
   if (!result.success) {
     return NextResponse.json({ error: result.error }, { status: 400 })
   }

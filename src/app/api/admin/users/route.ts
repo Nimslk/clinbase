@@ -4,6 +4,6 @@ import { allUsers } from '@/lib/users'
 export const runtime = 'nodejs'
 
 export async function GET() {
-  const users = allUsers()
+  const users = await allUsers()
   return NextResponse.json(users)
 }

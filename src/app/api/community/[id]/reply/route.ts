@@ -12,7 +12,7 @@ export async function POST(req: Request, { params }: { params: { id: string } })
   const { content } = await req.json()
   if (!content?.trim()) return NextResponse.json({ error: 'Пустой ответ' }, { status: 400 })
 
-  const user  = findById(session.userId)
+  const user  = await findById(session.userId)
   const reply = addReply(params.id, {
     userId:      session.userId,
     userName:    user?.name ?? session.email.split('@')[0],
