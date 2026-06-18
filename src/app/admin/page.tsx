@@ -27,6 +27,8 @@ export default function AdminDashboard() {
       const data = await res.json()
       setStats(data)
       setLast(new Date())
+    } catch {
+      // Network error — keep showing existing data
     } finally {
       setLoading(false)
     }

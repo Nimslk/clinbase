@@ -20,6 +20,8 @@ export default function AdminMaterialsPage() {
       const res  = await fetch('/api/materials?perPage=100')
       const data = await res.json()
       setMaterials(data.data ?? [])
+    } catch {
+      // Network error
     } finally {
       setLoading(false)
     }
