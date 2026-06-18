@@ -12,22 +12,32 @@ export function useTheme() {
   return useContext(ThemeContext)
 }
 
+function safeStorage(key: string): string | null {
+  try { return localStorage.getItem(key) } catch { return null }
+}
+
+function safeStorageSet(key: string, value: string) {
+  try { localStorage.setItem(key, value) } catch {}
+}
+
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>('light')
 
   useEffect(() => {
-    const saved = localStorage.getItem('medguide-theme') as Theme | null
-    const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-    const initial = saved ?? preferred
-    setTheme(initial)
-    document.documentElement.classList.toggle('dark', initial === 'dark')
+    try {
+      const saved    = safeStorage('medguide-theme') as Theme | null
+      const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+      const initial  = saved ?? preferred
+      setTheme(initial)
+      document.documentElement.classList.toggle('dark', initial === 'dark')
+    } catch {}
   }, [])
 
   const toggle = () => {
     setTheme((current) => {
       const next = current === 'light' ? 'dark' : 'light'
-      localStorage.setItem('medguide-theme', next)
-      document.documentElement.classList.toggle('dark', next === 'dark')
+      safeStorageSet('medguide-theme', next)
+      try { document.documentElement.classList.toggle('dark', next === 'dark') } catch {}
       return next
     })
   }

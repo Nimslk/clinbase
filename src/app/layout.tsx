@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 }
 
 // Anti-FOUC: apply saved theme before first paint
-const themeScript = `(function(){var t=localStorage.getItem('medguide-theme');var p=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if((t||p)==='dark')document.documentElement.classList.add('dark');})()`
+const themeScript = `(function(){try{var t=localStorage.getItem('medguide-theme');var p=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if((t||p)==='dark')document.documentElement.classList.add('dark');}catch(e){}})()`
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
