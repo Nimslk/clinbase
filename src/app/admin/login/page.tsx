@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, Lock, Mail, Shield } from 'lucide-react'
 import { LogoIcon } from '@/components/ui/Logo'
 
@@ -10,7 +9,6 @@ export default function AdminLoginPage() {
   const [showPass, setShowPass] = useState(false)
   const [error, setError]       = useState('')
   const [loading, setLoading]   = useState(false)
-  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -29,8 +27,7 @@ export default function AdminLoginPage() {
         await fetch('/api/auth/logout', { method: 'POST' })
         return
       }
-      router.push('/admin')
-      router.refresh()
+      window.location.href = '/admin'
     } catch {
       setError('Ошибка сети')
     } finally {
