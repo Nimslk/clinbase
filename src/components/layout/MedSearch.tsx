@@ -6,14 +6,18 @@ import { cn } from '@/lib/utils'
 const isCyrillic = (s: string) => /[а-яёА-ЯЁ]/.test(s)
 
 async function translateToEnglish(text: string): Promise<string> {
+  const controller = new AbortController()
+  const timer = setTimeout(() => controller.abort(), 3000)
   try {
     const res = await fetch(
       `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=ru|en`,
-      { signal: AbortSignal.timeout(3000) }
+      { signal: controller.signal }
     )
+    clearTimeout(timer)
     const json = await res.json()
     return json?.responseData?.translatedText ?? text
   } catch {
+    clearTimeout(timer)
     return text
   }
 }

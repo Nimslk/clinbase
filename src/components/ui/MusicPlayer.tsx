@@ -19,38 +19,50 @@ export default function MusicPlayer() {
 
   useEffect(() => {
     const init = () => {
-      if (playerRef.current) return
-      playerRef.current = new window.YT.Player(divId, {
-        videoId: VIDEO_ID,
-        playerVars: {
-          loop: 1, playlist: VIDEO_ID,
-          controls: 0, disablekb: 1, modestbranding: 1, rel: 0,
-        },
-        events: { onReady: () => setReady(true) },
-      })
+      try {
+        if (playerRef.current) return
+        playerRef.current = new window.YT.Player(divId, {
+          videoId: VIDEO_ID,
+          playerVars: {
+            loop: 1, playlist: VIDEO_ID,
+            controls: 0, disablekb: 1, modestbranding: 1, rel: 0,
+          },
+          events: { onReady: () => setReady(true) },
+        })
+      } catch {
+        // YouTube API unavailable (ad-blocker, network error, etc.)
+      }
     }
 
-    if (window.YT?.Player) {
-      init()
-    } else {
-      window.onYouTubeIframeAPIReady = init
-      if (!document.getElementById('yt-api-script')) {
-        const tag = document.createElement('script')
-        tag.id  = 'yt-api-script'
-        tag.src = 'https://www.youtube.com/iframe_api'
-        document.head.appendChild(tag)
+    try {
+      if (window.YT?.Player) {
+        init()
+      } else {
+        window.onYouTubeIframeAPIReady = init
+        if (!document.getElementById('yt-api-script')) {
+          const tag = document.createElement('script')
+          tag.id  = 'yt-api-script'
+          tag.src = 'https://www.youtube.com/iframe_api'
+          document.head.appendChild(tag)
+        }
       }
+    } catch {
+      // Fail silently
     }
   }, [])
 
   const toggle = () => {
     if (!playerRef.current || !ready) return
-    if (playing) {
-      playerRef.current.pauseVideo()
-    } else {
-      playerRef.current.playVideo()
+    try {
+      if (playing) {
+        playerRef.current.pauseVideo()
+      } else {
+        playerRef.current.playVideo()
+      }
+      setPlaying((v) => !v)
+    } catch {
+      // Player method unavailable
     }
-    setPlaying((v) => !v)
   }
 
   return (

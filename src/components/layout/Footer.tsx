@@ -102,7 +102,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-sm text-center sm:text-left">
-            <span>© {new Date().getFullYear()} ClinBase.</span>
+            <span suppressHydrationWarning>© {new Date().getFullYear()} ClinBase.</span>
             <span className="ml-1 text-gray-600">Совместный проект студентов СПбГПМУ и ТГМУ.</span>
           </div>
           <div className="flex items-center gap-6">
